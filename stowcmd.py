@@ -45,5 +45,9 @@ if sys.argv[1] == "stevedore":
 	import stow_stevedore
 	exit (2)
 
+if sys.argv[1] == "index":
+	import stow_index
+	exit (2)
+
 sys.stderr.write("Wrong argument\n")
 exit (2)
