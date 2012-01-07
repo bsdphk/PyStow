@@ -203,6 +203,7 @@ class silo(object):
 		self.fdr.seek(0, os.SEEK_SET)
 		a = self.fdr.read(7)
 		assert a == "STOW_20"
+		fdi = open(self.pfx + ".ID_", "w")
 		while True:
 			b = self.fdr.read(5)
 			assert b == "\nIDX\n"
@@ -216,7 +217,10 @@ class silo(object):
 			l = int(self.fdr.readline())
 			assert idx not in nidx
 			nidx[idx] = (self.get, pos)
+			fdi.write(idx + " %d\n" % pos)
 			self.fdr.seek(l, os.SEEK_CUR)
+		fdi.close()
+		os.rename(self.pfx + ".ID_", self.pfx + ".IDX")
 		return nidx
 
 if __name__ == "__main__":

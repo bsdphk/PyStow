@@ -27,7 +27,7 @@ class archive(object):
 		# Parameters
 		# Files above this size will be split
 		self.huge_size		= 1024 * 1024
-		self.zlib_level		= 1
+		self.zlib_level		= 6
 		self.max_silo		= 3 * 1024 * 1024 * 1024
 		self.dbg_silo		= None
 
@@ -120,7 +120,7 @@ class archive(object):
 		if l <= self.huge_size:
 			if try_compress:
 				z = zlib.compress(data, self.zlib_level)
-				if len(z) < .8 * l:
+				if len(z) < l:
 					self.add_entry(idx, "zlib", z)
 					return idx
 			self.add_entry(idx, "chunk", data)

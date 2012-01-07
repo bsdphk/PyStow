@@ -63,12 +63,17 @@ class mtree(object):
 				e = file(d, j[0])
 				d.files[j[0]] = e
 				t = e
+
 			for k in set:
 				x = k.split("=", 1)
 				t.a[x[0]] = x[1]
 			for k in j[1:]:
 				x = k.split("=", 1)
-				t.a[x[0]] = x[1]
+				#  .... link=foo bar
+				if len(x) == 2:
+					t.a[x[0]] = x[1]
+				else:
+					print("XXX: Mtree", j)
 
 	def default_cb(self, typ, obj, path, indent):
 		if typ == 'd':
