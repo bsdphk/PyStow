@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+if [ "x$1" = "x" ] ; then
+	set /home/Archive
+fi
+
+if [ ! -f "${1}/stowcmd.py" ] ; then
+	echo "${1}/stowctl.py not found" 1>&2
+	exit 2
+fi
+
+cd ${1}
+exec python stowcmd.py stevedore
