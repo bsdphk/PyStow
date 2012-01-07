@@ -1,0 +1,35 @@
+Welcome to the 3rd generation of "stow"
+---------------------------------------
+
+Stow is a backup/archive/timetravel tool I wrote in the late 1990ies
+and still use.
+
+The basic principle is that you have collections ("Home", "Pictures",
+"Documents" etc) and you snapshot them to your Stow archive when
+you feel like it.
+
+A snapshot is a textfile specifying what is in the collection right
+now, including a MD5 checksum for all files.
+
+The server stashes this textfile and parses it and requests any
+files with unknown MD5 checksums.
+
+The resulting archive saves only one copy of each file which saves
+a great deal of space.
+
+This version of stow is a rewrite to Python, and not yet complete,
+but more and more of the tools will probably be ported over as time
+goes by.
+
+
+Stow Silos
+----------
+
+Stow stores stuff in flat files called "silos", once a silo is full
+(default size is 3GB to avoid using the outher rim of DVDs) the
+next silo will be created.  Silos are named named "STOW%04d.SLO"
+
+Each silo has a file which caches the index, if you remove 
+index files ("STOW%04d.IDX") they will be regenerated.
+
+... More later.
