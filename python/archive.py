@@ -27,7 +27,7 @@ class archive(object):
 		# Parameters
 		# Files above this size will be split
 		self.huge_size		= 1024 * 1024
-		self.zlib_level		= 6
+		self.zlib_level		= 9
 		self.max_silo		= 3 * 1024 * 1024 * 1024
 		self.dbg_silo		= None
 
@@ -175,6 +175,9 @@ class archive(object):
 		assert type(timestamp) == int
 
 		mt = mtree.mtree(mtree_spec)
+		if mt.root == None:
+			print("XXX: Empty mtree")
+			return None
 
 		mtmd5 = self.add_bytes(mtree_spec)
 		self.dbg("  mtree_md5 " + mtmd5)

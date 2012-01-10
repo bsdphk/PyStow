@@ -148,7 +148,7 @@ class silo(object):
 			try:
 				idx = dict()
 				lo = None
-				for i in fdi.readlines:
+				for i in fdi.readlines():
 					i = i.split()
 					assert len(i) == 2
 					o = int(i[1])

@@ -28,6 +28,10 @@ class mtree(object):
 	def __init__(self, spec):
 		self.dirs = dict()
 	
+		self.root = None
+		ft = open("/tmp/_mt", "wb")
+		ft.write(spec)
+		ft.close()
 		l = list()
 		d = None
 		set = list()
@@ -49,6 +53,9 @@ class mtree(object):
 				l.pop()
 				d = d.parent
 				continue
+			elif len(j) == 1:
+				print("XXX: mtree, <%s>" % j)
+				raise
 			elif j[1] == "type=dir":
 				l.append(j[0])
 				dn = dir(d, l)
