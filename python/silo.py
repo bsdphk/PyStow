@@ -44,16 +44,17 @@ class silo(object):
 	   debug_fd = None,
 	   maxsize = 3 * 1024 * 1024 * 1024,
 	):
-		assert type(dir) == str
-		assert type(nbr) == int
-		assert type(maxsize) == int
-
-		self.nbr = nbr
-		self.maxsize = maxsize
 		self.debug_fd = debug_fd
 		self.fdw = None
 		self.fdi = None
 		self.fdr = None
+
+		assert type(dir) == str
+		assert type(nbr) == int
+		assert type(maxsize) in (int, long)
+
+		self.nbr = nbr
+		self.maxsize = maxsize
 
 		self.pfx = "STOW%04d" % nbr
 		if dir != None:
