@@ -215,6 +215,52 @@ if __name__ == "__main__":
 
 	import sys
 
+	chkd = dict()
+	s = archive("/mnt", sys.stdout)
+	lidx = list()
+	for i in s.idx:
+		if i[:6] == "INDEX_":
+			lidx.append(i)
+	lidx.sort()
+	for i in lidx:
+		print(i)
+		sys.stdout.flush()
+		j,m,b = s.get_entry(i)
+		if m != "mtree":
+			print("XXX: method=\"%s\"" % m, i, j)
+			continue
+		l = b.splitlines()
+		print(i,j,m,l)
+		im5 = l[2]
+		mtr = s.get_bytes(im5)
+		if mtr == None:
+			print("XXX: get mtree failed", i, im5)
+			continue
+		print("XX: ", len(mtr))
+		mx = mtree.mtree(mtr)
+
+		def cb(typ, obj, path, indent):
+			if typ != 'f':
+				return
+			if 'md5digest' not in obj.a:
+				return
+			md = obj.a['md5digest']
+			if md in chkd:
+				if chkd[md] == False:
+					print("XXX Missing", md, l[0], l[1], path)
+				return
+			bb = s.get_bytes(md)
+			if bb == None:
+				print("XXX Missing", md, l[0], l[1], path)
+				sys.stdout.flush()
+				chkd[md] = False
+			else:
+				chkd[md] = True
+
+		mx.tree(cb)
+		sys.stdout.flush()
+	exit(2)
+
 	s = archive("/tmp/A", sys.stdout)
 	i = s.get_entry('32abda09e3283853523758c32d421c80')
 	print(type(i), len(i))

@@ -135,8 +135,6 @@ class silo(object):
 		assert c == "\nIDX\n"
 		return (idx, method, body)
 
-		return None
-
 	def get_idx(self):
 		self.dbg("Get_idx")
 		try:
